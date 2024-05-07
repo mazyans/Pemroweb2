@@ -43,27 +43,3 @@ foreach ($data_lines as $line) {
 }
 echo "</table>";
 ?>
-Nama Negara: Tiongkok U-23
-Jumlah Pertandingan: 4
-Jumlah Menang: 2
-Jumlah Seri: 2
-Jumlah Kalah: 0
-Poin: 8
-Nama Operator: hanifah
-NIM Mahasiswa: 211011
-
-Uni Emirat Arab U-23,5,1,1,3,4
-Nama Negara: Tiongkok U-23
-Jumlah Pertandingan: 4
-Jumlah Menang: 3
-Jumlah Seri: 0
-Jumlah Kalah: 1
-Poin: 9
-Nama Operator: Faturrahman
-NIM Mahasiswa: 211044
-
-Tiongkok U-23,4,3,0,1,9
-Tiongkok U-23,4,3,0,1,9,Faturrahman,211044
-Korea Selatan U-23,11,1,0,10,3,cerpan,7177166
-Uni Emirat Arab U-23,4,2,0,2,6,ari,21101100
-Korea Selatan U-23,12,3,2,1,11,Muhammad Ryan AP,211011401529
