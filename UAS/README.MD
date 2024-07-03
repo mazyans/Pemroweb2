@@ -7,3 +7,5 @@ password ryan
 atau dapat menambahkan secara manual di databasenya
 
 jangan lupa export databasenya
+
+uaspemroweb2ryan.rf.gd
