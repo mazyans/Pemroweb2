@@ -1,7 +1,7 @@
 <?php
 $servername = "localhost";
 $username = "root";
-$password = ""; // update this with your MySQL password
+$password = "";
 $dbname = "uefa2024";
 
 $conn = new mysqli($servername, $username, $password, $dbname);
