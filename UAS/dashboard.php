@@ -30,7 +30,7 @@ $username = $_SESSION['username'];
             flex-direction: column;
             height: 100vh;
             margin: 0;
-            margin-top: 150px;
+            margin-top: 200px;
         }
         .dashboard-container, .results-container {
             background-color: #fff;
