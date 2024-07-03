@@ -11,7 +11,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     if ($result->num_rows == 1) {
         $user = $result->fetch_assoc();
-        if ($password === $user['password']) { // For security, use password_verify if passwords are hashed
+        if ($password === $user['password']) { 
             $_SESSION['username'] = $username;
             header("Location: dashboard.php");
         } else {
