@@ -6,11 +6,13 @@ if (!isset($_SESSION['username'])) {
 }
 include 'config.php';
 
-// Fetch groups for the dropdown menu
 $groups_result = $conn->query("SELECT DISTINCT group_name FROM groups");
 
-// Fetch countries for the dropdown menu
 $countries_result = $conn->query("SELECT id, name, group_name FROM countries");
+
+$results = $conn->query("SELECT r.group_name, c.name as country, r.wins, r.draws, r.losses FROM results r JOIN countries c ON r.country_id = c.id");
+
+$username = $_SESSION['username']; // Nama pengguna dari sesi
 
 ?>
 
@@ -25,16 +27,20 @@ $countries_result = $conn->query("SELECT id, name, group_name FROM countries");
             display: flex;
             justify-content: center;
             align-items: center;
+            flex-direction: column;
             height: 100vh;
+            margin: 0;
+            margin-top: 150px;
         }
-        .dashboard-container {
+        .dashboard-container, .results-container {
             background-color: #fff;
             padding: 20px;
             border-radius: 5px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             width: 400px;
+            margin-bottom: 20px;
         }
-        .dashboard-container h2 {
+        .dashboard-container h2, .results-container h2 {
             margin-bottom: 20px;
         }
         .dashboard-container select, .dashboard-container input, .dashboard-container button {
@@ -44,14 +50,47 @@ $countries_result = $conn->query("SELECT id, name, group_name FROM countries");
             border: 1px solid #ccc;
             border-radius: 5px;
         }
-        .dashboard-container button {
+        .dashboard-container button, .results-container button {
             background-color: #007bff;
             color: #fff;
             border: none;
             cursor: pointer;
         }
-        .dashboard-container button:hover {
+        .dashboard-container button:hover, .results-container button:hover {
             background-color: #0056b3;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        table, th, td {
+            border: 1px solid #ccc;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+        .logout-btn {
+            background-color: #dc3545;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+        .logout-btn:hover {
+            background-color: #c82333;
+        }
+        .print-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .print-header h2 {
+            margin: 0;
+        }
+        .print-header p {
+            margin: 5px 0;
         }
     </style>
 </head>
@@ -86,6 +125,43 @@ $countries_result = $conn->query("SELECT id, name, group_name FROM countries");
         </form>
     </div>
 
+    <div class="results-container">
+        <h2>Results</h2>
+        <div id="printSection">
+            <div class="print-header">
+                <h2>Group Results</h2>
+                <p id="currentDateTime"></p>
+                <p>User: <?php echo $username; ?></p>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Group</th>
+                        <th>Country</th>
+                        <th>Wins</th>
+                        <th>Draws</th>
+                        <th>Losses</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                    while ($result = $results->fetch_assoc()) {
+                        echo "<tr>";
+                        echo "<td>".$result['group_name']."</td>";
+                        echo "<td>".$result['country']."</td>";
+                        echo "<td>".$result['wins']."</td>";
+                        echo "<td>".$result['draws']."</td>";
+                        echo "<td>".$result['losses']."</td>";
+                        echo "</tr>";
+                    }
+                    ?>
+                </tbody>
+            </table>
+        </div>
+        <button onclick="printToPDF()">Print to PDF</button>
+        <a href="logout.php"><button class="logout-btn">Logout</button></a>
+    </div>
+
     <script>
         function filterCountries() {
             var groupDropdown = document.getElementById('groupDropdown');
@@ -100,6 +176,20 @@ $countries_result = $conn->query("SELECT id, name, group_name FROM countries");
                     option.style.display = 'none';
                 }
             }
+        }
+
+        function printToPDF() {
+            // Set current date and time
+            var currentDateTime = new Date();
+            document.getElementById('currentDateTime').innerText = currentDateTime.toLocaleString();
+
+            var printContents = document.getElementById('printSection').innerHTML;
+            var originalContents = document.body.innerHTML;
+
+            document.body.innerHTML = printContents;
+            window.print();
+            document.body.innerHTML = originalContents;
+            location.reload();
         }
     </script>
 </body>
