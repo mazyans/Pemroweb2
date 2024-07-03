@@ -12,7 +12,7 @@ $countries_result = $conn->query("SELECT id, name, group_name FROM countries");
 
 $results = $conn->query("SELECT r.group_name, c.name as country, r.wins, r.draws, r.losses FROM results r JOIN countries c ON r.country_id = c.id");
 
-$username = $_SESSION['username']; // Nama pengguna dari sesi
+$username = $_SESSION['username']; 
 
 ?>
 
